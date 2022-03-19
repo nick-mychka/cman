@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get '/check_login', to: 'users#check_login'
   end
 
+  resources :clusters, only: %i[index create update destroy]
+
   # Defines the root path route ("/")
   root "welcome#index"
 end
