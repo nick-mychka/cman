@@ -33,8 +33,8 @@ private
 
   def logged_user
     if decoded_token
-      user_id = decoded_token[0]['user_id']
-      current_user.present
+      @user_id = decoded_token[0]['user_id']
+      current_user.present?
     else
       false
     end
@@ -53,6 +53,6 @@ private
   end
 
   def current_user
-    @current_user ||= User.find_by(id: user_id)
+    @current_user ||= User.find_by(id: @user_id)
   end
 end
