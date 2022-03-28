@@ -2,12 +2,12 @@ class ClustersController < ApplicationController
   before_action :authorized
 
   def index
-    clusters = Cluster.all
+    clusters = current_user.clusters
     render json: ClusterBlueprint.render(clusters)
   end
 
   def create
-    cluster = Cluster.new(cluster_params)
+    cluster = current_user.clusters.new(cluster_params)
     cluster.save!
     render json: ClusterBlueprint.render(cluster), status: :created
   rescue
@@ -36,6 +36,6 @@ private
   end
 
   def current_cluster
-    @_current_cluster ||= Cluster.find(params[:id])
+    @_current_cluster ||= current_user.clusters.find(params[:id])
   end
 end
