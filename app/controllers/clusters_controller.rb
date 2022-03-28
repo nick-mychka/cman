@@ -7,7 +7,7 @@ class ClustersController < ApplicationController
   end
 
   def create
-    cluster = Marathon.new(cluster_params)
+    cluster = Cluster.new(cluster_params)
     cluster.save!
     render json: ClusterBlueprint.render(cluster), status: :created
   rescue
