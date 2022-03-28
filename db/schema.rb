@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_19_083403) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_28_122635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_083403) do
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 
+  create_table "coin_widgets", force: :cascade do |t|
+    t.bigint "cluster_id"
+    t.string "main_coin"
+    t.string "secd_coin"
+    t.text "amount", default: [], array: true
+    t.text "invested", default: [], array: true
+    t.string "change_up_to", default: "off"
+    t.string "change_down_to", default: "off"
+    t.text "notification"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cluster_id"], name: "index_coin_widgets_on_cluster_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "password_digest", default: "", null: false
     t.string "nickname"
@@ -30,4 +44,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_083403) do
   end
 
   add_foreign_key "clusters", "users"
+  add_foreign_key "coin_widgets", "clusters"
 end
