@@ -2,7 +2,7 @@ class CoinWidgetsController < ApplicationController
   before_action :authorized
 
   def index
-    render json: CoinWidgetBlueprint.render(current_cluster.items), status: :ok
+    render json: CoinWidgetBlueprint.render(current_cluster.coin_widgets), status: :ok
   rescue
     render json: "Not Found", status: :not_found
   end
@@ -29,15 +29,15 @@ class CoinWidgetsController < ApplicationController
 
 private
   def coin_widget_params
-    params.permit(:main_coin, :secd_coin, :amount, :invested, :change_up_to, :change_down_to, :notification)
+    params.permit(:base_currency, :quote_currency, { investment_list: [:amount, :invested] }, :change_up_to, :change_down_to, :notification)
   end
 
   def update_coin_widget_params
-    params.permit(:main_coin, :secd_coin, :amount, :invested, :change_up_to, :change_down_to, :notification)
+    params.permit(:base_currency, :quote_currency, { investment_list: [:amount, :invested] }, :change_up_to, :change_down_to, :notification)
   end
 
   def current_cluster
-    @_current_cluster ||= Cluster.find(params[:cluster_id])
+    @_current_cluster ||= current_user.clusters.find(params[:cluster_id])
   end
 
   def current_coin_widget

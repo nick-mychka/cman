@@ -24,10 +24,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_122635) do
 
   create_table "coin_widgets", force: :cascade do |t|
     t.bigint "cluster_id"
-    t.string "main_coin"
-    t.string "secd_coin"
-    t.text "amount", default: [], array: true
-    t.text "invested", default: [], array: true
+    t.string "base_currency"
+    t.string "quote_currency"
+    t.text "investment_list", default: [], array: true
     t.string "change_up_to", default: "off"
     t.string "change_down_to", default: "off"
     t.text "notification"

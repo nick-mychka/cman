@@ -3,10 +3,9 @@ class CreateCoinWidgets < ActiveRecord::Migration[7.0]
     create_table :coin_widgets do |t|
       t.references :cluster, foreign_key: true
 
-      t.string :main_coin
-      t.string :secd_coin
-      t.text :amount, array: true, default: []
-      t.text :invested, array: true, default: []
+      t.string :base_currency
+      t.string :quote_currency
+      t.text :investment_list, array: true, default: []
       t.string :change_up_to, default: 'off'
       t.string :change_down_to, default: 'off'
       t.text :notification
