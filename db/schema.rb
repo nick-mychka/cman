@@ -26,9 +26,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_122635) do
     t.bigint "cluster_id"
     t.string "base_currency"
     t.string "quote_currency"
-    t.text "investment_list", default: [], array: true
     t.string "change_up_to", default: "off"
     t.string "change_down_to", default: "off"
+    t.string "exchange_id", default: "binance"
+    t.text "trade_history", default: [], array: true
     t.text "notification"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,13 +1,17 @@
 class CoinWidgetBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :base_currency, :quote_currency, :investment_list, :change_up_to, :change_down_to, :notification
+  fields :base_currency, :quote_currency, :change_up_to, :change_down_to, :exchange_id, :trade_history, :notification
+
+  field :trade_history  do |coin_widget|
+    coin_widget.trade_history.map { |deal| JSON.parse deal }
+  end
 
   field :amount do |coin_widget|
-    coin_widget.investment_list.sum { |b| b.amount.to_i }
+    coin_widget.trade_history.sum { |deal| JSON.parse(deal)['amount'].to_i }
   end
 
   field :invested do |coin_widget|
-    coin_widget.investment_list.sum { |b| b.invested.to_i }
+    coin_widget.trade_history.sum { |deal| JSON.parse(deal)['invested'].to_i }
   end
 end

@@ -71,6 +71,7 @@ GEM
     bootsnap (1.11.1)
       msgpack (~> 1.2)
     builder (3.2.4)
+    coingecko_ruby (0.4.2)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     debug (1.4.0)
@@ -179,6 +180,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   blueprinter (~> 0.25.3)
   bootsnap
+  coingecko_ruby
   debug
   dotenv-rails (~> 2.7, >= 2.7.6)
   foreman

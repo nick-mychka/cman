@@ -16,7 +16,7 @@ class CoinWidgetsController < ApplicationController
   end
 
   def update
-    current_coin_widget.update!(update_coin_widget_params)
+    current_coin_widget.update!(coin_widget_params)
     render json: CoinWidgetBlueprint.render(current_coin_widget), status: :ok
   rescue
     render json: current_coin_widget, status: :unprocessable_entity
@@ -29,11 +29,17 @@ class CoinWidgetsController < ApplicationController
 
 private
   def coin_widget_params
-    params.permit(:base_currency, :quote_currency, { investment_list: [:amount, :invested] }, :change_up_to, :change_down_to, :notification)
-  end
-
-  def update_coin_widget_params
-    params.permit(:base_currency, :quote_currency, { investment_list: [:amount, :invested] }, :change_up_to, :change_down_to, :notification)
+    params.permit(
+      :base_currency,
+      :quote_currency,
+      :change_up_to,
+      :change_down_to,
+      :exchange_id,
+      { trade_history: [:amount, :invested] },
+      :notification
+    ).tap do |new_params|
+      new_params[:trade_history] = new_params[:trade_history].map(&:to_json)
+    end
   end
 
   def current_cluster

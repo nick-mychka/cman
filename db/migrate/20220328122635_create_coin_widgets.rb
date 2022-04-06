@@ -5,9 +5,10 @@ class CreateCoinWidgets < ActiveRecord::Migration[7.0]
 
       t.string :base_currency
       t.string :quote_currency
-      t.text :investment_list, array: true, default: []
       t.string :change_up_to, default: 'off'
       t.string :change_down_to, default: 'off'
+      t.string :exchange_id, default: 'binance'
+      t.text :trade_history, array: true, default: []
       t.text :notification
 
       t.timestamps
