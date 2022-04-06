@@ -38,7 +38,7 @@ private
       { trade_history: [:amount, :invested] },
       :notification
     ).tap do |new_params|
-      new_params[:trade_history] = new_params[:trade_history].map(&:to_json)
+      new_params[:trade_history] = new_params[:trade_history].map(&:to_json) if new_params[:trade_history].present?
     end
   end
 

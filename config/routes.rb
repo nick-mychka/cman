@@ -8,10 +8,10 @@ Rails.application.routes.draw do
     resources :users, only: %i[create]
 
     post "/login", to: "users#login"
-    get '/check_login', to: 'users#check_login'
+    get "/check_login", to: "users#check_login"
 
     resources :clusters, only: %i[index create update destroy] do
-      resources :coin_widgets, only: [:index, :create, :destroy, :update]
+      resources :coin_widgets, only: %i[index create update destroy]
     end
   end
 end
