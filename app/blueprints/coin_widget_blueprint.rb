@@ -8,10 +8,10 @@ class CoinWidgetBlueprint < Blueprinter::Base
   end
 
   field :amount do |coin_widget|
-    coin_widget.trade_history.sum { |deal| JSON.parse(deal)['amount'].to_i }
+    coin_widget.trade_history.sum { |deal| JSON.parse(deal)['amount'].to_f }
   end
 
   field :invested do |coin_widget|
-    coin_widget.trade_history.sum { |deal| JSON.parse(deal)['invested'].to_i }
+    coin_widget.trade_history.sum { |deal| JSON.parse(deal)['invested'].to_f }
   end
 end
