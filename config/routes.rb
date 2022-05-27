@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     get "/exchanges", to: "coingeckos#exchanges"
 
     resources :clusters, only: %i[index create update destroy] do
+      collection do
+        put :update_clusters_order
+      end
+
       resources :coin_widgets, only: %i[index create update destroy]
     end
   end

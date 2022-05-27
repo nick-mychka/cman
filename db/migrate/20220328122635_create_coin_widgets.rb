@@ -7,7 +7,7 @@ class CreateCoinWidgets < ActiveRecord::Migration[7.0]
       t.string :quote_currency
       t.string :change_up_to, default: 'off'
       t.string :change_down_to, default: 'off'
-      t.string :exchange_id, default: 'binance'
+      t.string :exchange_id
       t.text :trade_history, array: true, default: []
       t.text :notification
 

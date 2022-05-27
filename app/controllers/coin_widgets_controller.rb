@@ -35,8 +35,9 @@ private
       :change_up_to,
       :change_down_to,
       :exchange_id,
-      { trade_history: [:amount, :invested] },
-      :notification
+      { trade_history: %i[amount, invested] },
+      :notification,
+      :view_order
     ).tap do |new_params|
       new_params[:trade_history] = new_params[:trade_history].map(&:to_json) if new_params[:trade_history].present?
     end

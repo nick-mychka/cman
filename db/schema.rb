@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_28_122635) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_23_163835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_122635) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "view_order"
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 
@@ -28,11 +29,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_122635) do
     t.string "quote_currency"
     t.string "change_up_to", default: "off"
     t.string "change_down_to", default: "off"
-    t.string "exchange_id", default: "binance"
+    t.string "exchange_id"
     t.text "trade_history", default: [], array: true
     t.text "notification"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "view_order"
     t.index ["cluster_id"], name: "index_coin_widgets_on_cluster_id"
   end
 

@@ -2,8 +2,21 @@ class ClustersController < ApplicationController
   before_action :authorized
 
   def index
-    clusters = current_user.clusters
+    clusters = current_user.clusters.sorted_by_view_order
     render json: ClusterBlueprint.render(clusters)
+  end
+
+  def update_clusters_order
+    grouped_clusters = update_clusters_order_params[:clusters].each_with_object({}) do |cluster, memo|
+      memo[cluster[:id]] = { view_order: cluster[:view_order] }
+    end
+
+    current_user.clusters.update(grouped_clusters.keys, grouped_clusters.values)
+
+    clusters = current_user.clusters.sorted_by_view_order
+    render json: ClusterBlueprint.render(clusters)
+  rescue
+    render json: clusters, status: :unprocessable_entity
   end
 
   def create
@@ -28,11 +41,15 @@ class ClustersController < ApplicationController
 
 private
   def cluster_params
-    params.permit(:name)
+    params.permit(:name, :view_order)
   end
 
   def update_cluster_params
     params.permit(:name)
+  end
+
+  def update_clusters_order_params
+    params.permit(clusters: %i[id view_order])
   end
 
   def current_cluster
