@@ -32,6 +32,7 @@ private
     params.permit(
       :base_currency,
       :quote_currency,
+      :base_currency_id,
       :change_up_to,
       :change_down_to,
       :exchange_id,
