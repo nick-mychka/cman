@@ -36,7 +36,7 @@ private
       :change_up_to,
       :change_down_to,
       :exchange_id,
-      { trade_history: [:amount, :invested] },
+      { trade_history: %i[amount invested] },
       :notification,
       :view_order,
     ).tap do |new_params|
