@@ -9,8 +9,15 @@ class CoingeckosController < ApplicationController
 
   def exchange_tickers
     tickers_data = exchange_tickers_params[:data].each_with_object({}) do |item, memo|
-      data_chunk = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids])
-      memo[item[:exchange_id]] = data_chunk['tickers']
+      data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids])
+      tickers_data = data['tickers']
+
+      if tickers_data.size >= 100
+        second_page_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: 2)
+        tickers_data.concat(second_page_data['tickers'])
+      end
+
+      memo[item[:exchange_id]] = tickers_data
     end
 
     render json: tickers_data
