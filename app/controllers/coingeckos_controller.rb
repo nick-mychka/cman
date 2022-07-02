@@ -14,11 +14,11 @@ class CoingeckosController < ApplicationController
 
       next_page = 2 if tickers_data.size >= 100
 
-      while next_page
+      while next_page > 0
         next_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: page)
         tickers_data.concat(next_data['tickers'])
 
-        next_page = next_data['tickers'].size >= 100 ? (next_page + 1) : nil
+        next_page = next_data['tickers'].size >= 100 ? (next_page + 1) : 0
       end
 
       memo[item[:exchange_id]] = tickers_data
