@@ -12,13 +12,21 @@ class CoingeckosController < ApplicationController
       data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids])
       tickers_data = data['tickers']
 
-      next_page = 2 if tickers_data.size >= 100
+      # next_page = 2 if tickers_data.size >= 100
 
-      while next_page > 0
-        next_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: page)
+      # while next_page > 0
+      #   next_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: page)
+      #   tickers_data.concat(next_data['tickers'])
+
+      #   next_page = next_data['tickers'].size >= 100 ? (next_page + 1) : 0
+      # end
+
+      if tickers_data.size >= 100
+        next_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: 2)
         tickers_data.concat(next_data['tickers'])
-
-        next_page = next_data['tickers'].size >= 100 ? (next_page + 1) : 0
+      elsif tickers_data.size >= 200
+        next_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: 3)
+        tickers_data.concat(next_data['tickers'])
       end
 
       memo[item[:exchange_id]] = tickers_data
