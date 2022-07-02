@@ -12,9 +12,13 @@ class CoingeckosController < ApplicationController
       data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids])
       tickers_data = data['tickers']
 
-      if tickers_data.size >= 100
-        second_page_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: 2)
-        tickers_data.concat(second_page_data['tickers'])
+      next_page = 2 if tickers_data.size >= 100
+
+      while next_page
+        next_data = coingecko_client.exchange_tickers(item[:exchange_id], coin_ids: item[:coin_ids], page: page)
+        tickers_data.concat(next_data['tickers'])
+
+        next_page = next_data['tickers'].size >= 100 ? (next_page + 1) : nil
       end
 
       memo[item[:exchange_id]] = tickers_data
@@ -23,10 +27,18 @@ class CoingeckosController < ApplicationController
     render json: tickers_data
   end
 
+  def coins_markets
+    render json: coingecko_client.markets(coins_markets_params[:coin_ids], vs_currency: 'usd')
+  end
+
   private
 
   def exchange_tickers_params
     params.permit(data: %i[exchange_id coin_ids])
+  end
+
+  def coins_markets_params
+    params.permit(:coin_ids)
   end
 
   def coingecko_client

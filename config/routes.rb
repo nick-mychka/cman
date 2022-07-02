@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get "/coins_list", to: "coingeckos#coins_list"
     get "/exchanges", to: "coingeckos#exchanges"
     get "/exchange_tickers", to: "coingeckos#exchange_tickers"
+    get "/coins_markets", to: "coingeckos#coins_markets"
 
     resources :clusters, only: %i[index create update destroy] do
       collection do
