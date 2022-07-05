@@ -11,9 +11,10 @@ Rails.application.routes.draw do
     get "/check_login", to: "users#check_login"
 
     get "/coins_list", to: "coingeckos#coins_list"
+    get "/top_popular_coins", to: "coingeckos#top_popular_coins"
     get "/exchanges", to: "coingeckos#exchanges"
     get "/exchange_tickers", to: "coingeckos#exchange_tickers"
-    get "/coins_markets", to: "coingeckos#coins_markets"
+    get "/coins_market_data", to: "coingeckos#coins_market_data"
 
     resources :clusters, only: %i[index create update destroy] do
       collection do
